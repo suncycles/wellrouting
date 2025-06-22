@@ -2,13 +2,15 @@ body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 20px;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    align-items: center;
+    background: linear-gradient(135deg, #667eea 0%, #667eeb 100%);
     min-height: 100vh;
 }
 
 .system-container {
     max-width: 1400px;
     margin: 0 auto;
+    
 }
 
 .system-title {
@@ -292,4 +294,14 @@ body {
 }
 .clicked-well:hover{
     background: linear-gradient(145deg, #3273fe, #25c7fc) !important;
+}
+
+.disabled {
+    background: #333 !important;
+    cursor: default !important;
+    border-color: black !important;
+}
+.disabled:hover{
+    transform: none !important;
+
 }

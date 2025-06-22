@@ -85,6 +85,9 @@ function clearHighlights() {
     document.querySelectorAll('.clicked-well').forEach(el => {
         el.classList.remove('clicked-well');
     });
+    document.querySelector('#selected-oligos').innerHTML = '';
+    document.querySelector('#associated-oligos').innerHTML = '';
+
 }
 
 // Function to add highlight class to element
@@ -106,6 +109,28 @@ function searchAndHighlight(clickedWell, clickedPlateType, clickedPlateNumber) {
     let matchesFound = 0;
     let totalRowsProcessed = 0;
 
+    // // add the clicked well's oligo name
+    // csvData.forEach(row => {
+    //     const sourceWell = row.Source_Well;
+    //     const destWell = row.Dest_Well;
+    //     const sourcePlateNum = row.Source_Plate_Location;
+    //     const destPlateNum = row.Dest_Plate_Location;
+    //     const oligoName = row.Oligo_name;
+
+    //     if (clickedPlateType === 'SP'){
+    //         if(sourceWell === clickedWell && sourcePlateNum === clickedPlateNumber){
+    //             addOligoToList(oligoName, 'selected-oligos');
+    //             return;
+    //         }
+    //     } else if(clickedPlateType === 'DP'){
+    //         if(destWell === clickedWell && destPlateNum === clickedPlateNumber) {
+    //             addOligoToList(oligoName, 'selected-oligos');
+    //             return;
+    //         }
+    //     } 
+    // });
+
+
     // Search through CSV data
     csvData.forEach((row, index) => {
         totalRowsProcessed++;
@@ -114,6 +139,7 @@ function searchAndHighlight(clickedWell, clickedPlateType, clickedPlateNumber) {
         const destWell = row.Dest_Well;
         const destLocation = row.Dest_Plate_Location; // This is the number directly
         const sourceLocation = row.Source_Plate_Location; // This is the number directly
+        const oligoName = row.Oligo_name;
 
         // Plate numbers are directly available from the row data, no extraction needed
         const sourcePlateNum = sourceLocation;
@@ -136,6 +162,7 @@ function searchAndHighlight(clickedWell, clickedPlateType, clickedPlateNumber) {
                     const destElementId = `DP${destPlateNum}_${destWell}`;
                     console.log(`    → Highlighting destination: ${destElementId}`);
                     highlightElement(destElementId);
+                    addOligoToList(oligoName, 'associated-oligos');
                 } else {
                     console.log(`    ⚠ Missing destination data: destWell='${destWell}', destPlateNum=${destPlateNum}`);
                 }
@@ -155,6 +182,7 @@ function searchAndHighlight(clickedWell, clickedPlateType, clickedPlateNumber) {
                     const sourceElementId = `SP${sourcePlateNum}_${sourceWell}`;
                     console.log(`    → Highlighting source: ${sourceElementId}`);
                     highlightElement(sourceElementId);
+                    addOligoToList(oligoName, 'associated-oligos');
                 } else {
                     console.log(`    ⚠ Missing source data: sourceWell='${sourceWell}', sourcePlateNum=${sourcePlateNum}`);
                 }
@@ -202,8 +230,7 @@ function handleWellClick(event) {
     wellElement.classList.add('clicked-well');
     // Perform search and highlight
     searchAndHighlight(plateInfo.wellPosition, plateInfo.plateType, plateInfo.plateNumber);
-
-    console.log("<---- Searching and Highlighting:"+plateInfo.wellPosition+plateInfo.plateType+ plateInfo.plateNumber+"--->\n");
+    //console.log("<---- Searching and Highlighting:"+plateInfo.wellPosition+plateInfo.plateType+ plateInfo.plateNumber+"--->\n");
 }
 
 // Function to attach click events to all wells
@@ -222,7 +249,12 @@ function attachWellClickEvents() {
     
     //console.log(`Attached click events to ${wellElements.length} well elements`);
 }
-
+//append oligo text to list at the bottom
+function addOligoToList(oligoName, listType){
+    var entry = document.createElement('li');
+    entry.appendChild(document.createTextNode(oligoName));
+    document.getElementById(listType).appendChild(entry);
+}
 // Function to initialize the system
 function initializeWellSearch() {
     // Create file input for CSV loading
@@ -302,12 +334,16 @@ function initializeWellSearch() {
 
 // Initialize when DOM is loaded
 document.addEventListener('DOMContentLoaded', function() {
+    document.querySelectorAll('.source-plates .well').forEach(e=>{
+        e.classList.add('disabled');
+    });
+
     initializeWellSearch();
 
     document.querySelectorAll('.well').forEach(well => {
         const id = well.id;
         const match = id.match(/SP[1-5]_([A-Z]\d+)/);
         well.textContent = match[1];
-
+        well.classList.remove('disabled');
     });
 });

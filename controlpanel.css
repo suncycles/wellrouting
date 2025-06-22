@@ -1,0 +1,70 @@
+ #tray-selection {
+     display: flex;
+     flex-wrap: wrap;
+     gap: 10px;
+     padding: 20px;
+     font-family: Arial, sans-serif;
+ }
+
+ #tray-selection input[type="checkbox"] {
+     display: none;
+ }
+
+ #tray-selection label {
+     display: inline-block;
+     padding: 12px 24px;
+     background-color: #f0f0f0;
+     border: 2px solid #ddd;
+     border-radius: 8px;
+     cursor: pointer;
+     transition: all 0.3s ease;
+     font-weight: 500;
+     text-align: center;
+     user-select: none;
+ }
+
+ /* Hover effect */
+ #tray-selection label:hover {
+     background-color: #e0e0e0;
+     border-color: #bbb;
+     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+ }
+
+ /* Active/checked state */
+ #tray-selection input[type="checkbox"]:checked+label {
+     background-color: #007bff;
+     color: white;
+     border-color: #0056b3;
+     box-shadow: 0 2px 4px rgba(0, 123, 255, 0.3);
+ }
+
+ /* Active/checked hover state */
+ #tray-selection input[type="checkbox"]:checked+label:hover {
+     background-color: #0056b3;
+     box-shadow: 0 4px 8px rgba(0, 123, 255, 0.4);
+ }
+
+ /* Active state when clicking */
+ #tray-selection label:active {
+     box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+ }
+
+ #oligos-display {
+     float: left;
+     display: block;
+     text-align: left;
+     color: white;
+     font-size: 18px;
+     font-weight: bold;
+     border-radius: 8px;
+     padding: 1rem;
+     background-color: #353535;
+     margin-bottom: 2rem;
+ }
+
+ #selected-oligos,
+ #associated-oligos {
+     text-decoration: none;
+     color: rgb(206, 206, 206);
+     font-size: 16px;
+ }

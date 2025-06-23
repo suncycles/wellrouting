@@ -305,3 +305,11 @@ body {
     transform: none !important;
 
 }
+
+.overlapped {
+    background-color: #ff0000 !important; /* Bright red */
+    border: 2px solid #cc0000 !important;
+    color: white !important;
+    font-weight: bold !important;
+    box-shadow: 0 0 10px rgba(255, 0, 0, 0.5) !important;
+}
